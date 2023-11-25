@@ -53,7 +53,10 @@ const NFCComponent = () => {
         <>
           <Text>Tag ID: {tagData.id}</Text>
           <Image
-            source={require("https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png")}
+            source={{
+              uri: "https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png",
+            }}
+            style={{ width: 100, height: 100 }}
           />
         </>
       );
