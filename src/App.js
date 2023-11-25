@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Text, Button, View } from "react-native";
-import NfcManager, { NfcTech } from "react-native-nfc-manager";
+import { Text, Button, View, Alert } from "react-native";
+import NfcManager, { NfcEvents, NfcTech } from "react-native-nfc-manager";
 
 const NFCComponent = () => {
   const [nfcEnabled, setNfcEnabled] = useState(false);
@@ -20,11 +20,18 @@ const NFCComponent = () => {
       setTagData(tag);
     });
 
+    // Subscribe to NFC errors
+    NfcManager.setEventListener(NfcEvents.Error, (error) => {
+      console.log("NFC Error:", error);
+      Alert.alert("NFC Error", error);
+    });
+
     return () => {
       // Clean up NFC manager
       NfcManager.unregisterTagEvent();
       NfcManager.cancelTechnologyRequest().catch(() => {});
       NfcManager.unregisterTagEvent().catch(() => {});
+      NfcManager.setEventListener(NfcEvents.Error, null);
     };
   }, []);
 
@@ -38,6 +45,7 @@ const NFCComponent = () => {
       await NfcManager.cancelTechnologyRequest();
     } catch (error) {
       console.log("Error reading tag:", error);
+      Alert.alert("Error", "Error reading NFC tag.");
     }
   };
 
