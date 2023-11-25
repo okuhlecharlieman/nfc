@@ -69,7 +69,7 @@ const NFCComponent = () => {
         source={{
           uri: "https://restechtoday.com/wp-content/uploads/2022/03/NFC-Card.png",
         }}
-        style={{ width: 250, height: 250 }}
+        style={{ width: 350, height: 250 }}
       />
 
       <Button title="Scan NFC" onPress={handleReadTag} />
