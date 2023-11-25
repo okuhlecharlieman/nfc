@@ -51,7 +51,6 @@ const NFCComponent = () => {
     if (tagData) {
       return (
         <>
-          <Text>Tag ID: {tagData.id}</Text>
           <Image
             source={{
               uri: "https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png",
