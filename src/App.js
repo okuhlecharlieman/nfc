@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, Button, View, Alert, Image } from "react-native";
-import NfcManager, { NfcTech, Ndef } from "react-native-nfc-manager";
+import NfcManager, { NfcTech } from "react-native-nfc-manager";
 
 const NFCComponent = () => {
   const [nfcEnabled, setNfcEnabled] = useState(false);
@@ -52,7 +52,9 @@ const NFCComponent = () => {
       return (
         <>
           <Text>Tag ID: {tagData.id}</Text>
-          <Image source={require("./path-to-your-image.png")} />
+          <Image
+            source={require("https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png")}
+          />
         </>
       );
     } else {
