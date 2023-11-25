@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, Button, View } from "react-native";
-import NfcManager, { NfcTech } from "react-native-nfc-manager";
+import NfcManager, { NfcEvents, NfcTech } from "react-native-nfc-manager";
 
 const NFCComponent = () => {
   const [nfcEnabled, setNfcEnabled] = useState(false);
@@ -50,7 +50,7 @@ const NFCComponent = () => {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>NFC Enabled: {nfcEnabled ? "Yes" : "No"}</Text>
       <Button title="Read NFC Tag" onPress={handleReadTag} />
       {renderTagData()}
