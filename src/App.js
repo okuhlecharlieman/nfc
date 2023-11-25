@@ -5,6 +5,7 @@ import NfcManager, { NfcTech } from "react-native-nfc-manager";
 const NFCComponent = () => {
   const [nfcEnabled, setNfcEnabled] = useState(false);
   const [tagData, setTagData] = useState(null);
+  const [showImage, setShowImage] = useState(false);
 
   useEffect(() => {
     const checkIsSupported = async () => {
@@ -13,9 +14,6 @@ const NFCComponent = () => {
         NfcManager.start();
         NfcManager.isEnabled().then((enabled) => {
           setNfcEnabled(enabled);
-        });
-        NfcManager.registerTagEvent((tag) => {
-          setTagData(tag);
         });
         NfcManager.setEventListener(NfcTech.Ndef, (error) => {
           console.log("NFC Error:", error);
@@ -39,6 +37,7 @@ const NFCComponent = () => {
       const tag = await NfcManager.getTag();
       if (tag) {
         setTagData(tag);
+        setShowImage(true);
       }
       await NfcManager.cancelTechnologyRequest();
     } catch (error) {
@@ -51,12 +50,15 @@ const NFCComponent = () => {
     if (tagData) {
       return (
         <>
-          <Image
-            source={{
-              uri: "https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png",
-            }}
-            style={{ width: 100, height: 100 }}
-          />
+          <Text>Tag ID: {tagData.id}</Text>
+          {showImage && (
+            <Image
+              source={{
+                uri: "https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png",
+              }}
+              style={{ width: 100, height: 100 }}
+            />
+          )}
         </>
       );
     } else {
