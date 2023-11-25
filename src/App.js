@@ -1,37 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { Text, Button, View, Alert } from "react-native";
-import NfcManager, { NfcEvents, NfcTech } from "react-native-nfc-manager";
+import NfcManager, { NfcTech } from "react-native-nfc-manager";
 
 const NFCComponent = () => {
   const [nfcEnabled, setNfcEnabled] = useState(false);
   const [tagData, setTagData] = useState(null);
 
   useEffect(() => {
-    // Initialize NFC manager
-    NfcManager.start();
-
-    // Check if NFC is enabled on the device
-    NfcManager.isEnabled().then((enabled) => {
-      setNfcEnabled(enabled);
-    });
-
-    // Set up NFC tag detection event listener
-    NfcManager.registerTagEvent((tag) => {
-      setTagData(tag);
-    });
-
-    // Subscribe to NFC errors
-    NfcManager.setEventListener(NfcEvents.Error, (error) => {
-      console.log("NFC Error:", error);
-      Alert.alert("NFC Error", error);
-    });
-
+    const checkIsSupported = async () => {
+      const deviceIsSupported = await NfcManager.isSupported();
+      if (deviceIsSupported) {
+        NfcManager.start();
+        NfcManager.isEnabled().then((enabled) => {
+          setNfcEnabled(enabled);
+        });
+        NfcManager.registerTagEvent((tag) => {
+          setTagData(tag);
+        });
+        NfcManager.setEventListener(NfcTech.Ndef, (error) => {
+          console.log("NFC Error:", error);
+          Alert.alert("NFC Error", error);
+        });
+      } else {
+        console.log("Device does not support NFC");
+      }
+    };
+    checkIsSupported();
     return () => {
-      // Clean up NFC manager
       NfcManager.unregisterTagEvent();
       NfcManager.cancelTechnologyRequest().catch(() => {});
-      NfcManager.unregisterTagEvent().catch(() => {});
-      NfcManager.setEventListener(NfcEvents.Error, null);
+      NfcManager.setEventListener(NfcTech.Ndef, null);
     };
   }, []);
 
