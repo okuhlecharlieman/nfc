@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, Button, View } from "react-native";
-import NfcManager, { NfcEvents, NfcTech } from "react-native-nfc-manager";
+import NfcManager, { NfcTech } from "react-native-nfc-manager";
 
 const NFCComponent = () => {
   const [nfcEnabled, setNfcEnabled] = useState(false);
