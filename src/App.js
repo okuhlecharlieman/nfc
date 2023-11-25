@@ -70,11 +70,11 @@ const NFCComponent = () => {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Image
         source={{
-          uri: "https://cashfreelogo.cashfree.com/website/landings/instant-settlements/payment-done.png",
+          uri: "https://restechtoday.com/wp-content/uploads/2022/03/NFC-Card.png",
         }}
-        style={{ width: 100, height: 100 }}
+        style={{ width: 500, height: 500 }}
       />
-      <Text>NFC Enabled: {nfcEnabled ? "Yes" : "No"}</Text>
+
       <Button title="Scan NFC" onPress={handleReadTag} />
       {renderTagData()}
     </View>
