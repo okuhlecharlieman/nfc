@@ -3,7 +3,6 @@ import { Text, Button, View, Alert, Image } from "react-native";
 import NfcManager, { NfcTech } from "react-native-nfc-manager";
 
 const NFCComponent = () => {
-  const [nfcEnabled, setNfcEnabled] = useState(false);
   const [tagData, setTagData] = useState(null);
   const [showImage, setShowImage] = useState(false);
 
@@ -12,9 +11,7 @@ const NFCComponent = () => {
       const deviceIsSupported = await NfcManager.isSupported();
       if (deviceIsSupported) {
         NfcManager.start();
-        NfcManager.isEnabled().then((enabled) => {
-          setNfcEnabled(enabled);
-        });
+        NfcManager.isEnabled().then((enabled) => {});
         NfcManager.setEventListener(NfcTech.Ndef, (error) => {
           console.log("NFC Error:", error);
           Alert.alert("NFC Error", error);
